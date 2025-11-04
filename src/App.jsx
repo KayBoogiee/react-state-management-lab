@@ -1,11 +1,13 @@
 
 import React, { useState } from "react";
 import "./App.css";
+const App = () => {
+  
 
-function App() {
-  // 🧟‍♂️ 1. State variables
-  const [team, setTeam] = useState([]);
-  const [money, setMoney] = useState(100);
+  const [team, setTeam] = useState([]);       
+  const [money, setMoney] = useState(100);    
+
+  
   const [zombieFighters, setZombieFighters] = useState([
     {
       id: 1,
@@ -89,14 +91,14 @@ function App() {
     },
   ]);
 
-  // 🧠 Derived data
+  // ✅ Step 3: Derived totals (these aren’t states)
   const totalStrength = team.reduce((sum, fighter) => sum + fighter.strength, 0);
   const totalAgility = team.reduce((sum, fighter) => sum + fighter.agility, 0);
 
-  // 🧍‍♂️ Add fighter handler
+  // ✅ Step 4: Handlers
   const handleAddFighter = (fighter) => {
     if (money < fighter.price) {
-      console.log("Not enough money");
+      console.log("Not enough money!");
       return;
     }
 
@@ -105,13 +107,13 @@ function App() {
     setMoney(money - fighter.price);
   };
 
-  // 🚪 Remove fighter handler
   const handleRemoveFighter = (fighter) => {
     setTeam(team.filter((f) => f.id !== fighter.id));
     setZombieFighters([...zombieFighters, fighter]);
     setMoney(money + fighter.price);
   };
 
+  // ✅ Step 5: UI (what you see on screen)
   return (
     <div className="App">
       <h1>🧟 Zombie Fighters</h1>
@@ -144,9 +146,7 @@ function App() {
                 <p>Price: ${fighter.price}</p>
                 <p>Strength: {fighter.strength}</p>
                 <p>Agility: {fighter.agility}</p>
-                <button onClick={() => handleRemoveFighter(fighter)}>
-                  Remove
-                </button>
+                <button onClick={() => handleRemoveFighter(fighter)}>Remove</button>
               </li>
             ))}
           </ul>
@@ -157,15 +157,6 @@ function App() {
       )}
     </div>
   );
-}
+};
 
-
-
-const App = () => {
-
-  return (
-    <h1>Hello world!</h1>
-  );
-}
-
-export default App
+export default App;
